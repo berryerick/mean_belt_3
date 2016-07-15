@@ -1,0 +1,24 @@
+<div class="" ng-controller="loginController as LC">
+  {{LC}}
+
+  <form>
+    <div class="field">
+      <label for="name">Name: </label>
+      <input type="text" name="first_name" ng-model="LC.user.name">
+    </div>
+    <!-- <div class="field">
+      <label for="last_name">Last Name: </label>
+      <input type="text" name="last_name" ng-model="LC.user.last_name">
+    </div>
+    <div class="field">
+      <label for="email">Email: </label>
+      <input type="text" name="email" ng-model="LC.user.email">
+    </div> -->
+    <button ng-click="LC.login()">Login</button>
+
+    <ul>
+      <li ng-repeat="error in LC.errors" ng-show="LC.errors.length > 0"><span ng-bind="error"></span></li>
+    </ul>
+  </form>
+
+</div>
