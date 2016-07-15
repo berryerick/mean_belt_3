@@ -20,23 +20,23 @@ module.exports = (function(){
           console.error(err);
         }
         else {
-          console.log(data);
+          console.log("user find Data",data);
           if (data.length > 0) {
             // result.errors.push("This name already exists")
-            result.user = data[0]
+            result.info = data[0]
           }
           else {
             var user = new User(req.body)
-            user.save(function(err, user){
+            user.save(function(err, info){
               if (err) {
-                console.error(err)
+                console.error("save Error:", err)
                 result.status = false
                 for (var i = 0; i < err.errors.length; i++) {
                   result.errors.push(err.errors[i])
                 }
               }
               else {
-                result.user = user
+                result.info = info
               }
             })
           }
