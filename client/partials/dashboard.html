@@ -1,7 +1,23 @@
 <div class="" ng-controller="dashboardController as DC">
-  {{DC}}
-  <a href="" ng-click="DC.logout()">Logout</a>
-  <h1>dashboard</h1>
-  <a href="#/testmodel/create">Create new testmodel</a>
+  <!-- {{DC}} -->
 
+  <a href="" ng-click="DC.logout()">Logout</a>
+  <a href="#/create">Create new poll</a>
+  <h1>Current Polls</h1>
+
+  <input type="text" placeholder="search (by question)" ng-model="search.question">
+  <table>
+    <thead>
+      <th>Name</th>
+      <th>Survey Question</th>
+      <th>Date Posted</th>
+      <th>Action</th>
+    </thead>
+    <tr ng-repeat="survey in DC.surveys | filter:search ">
+      <td ng-bind='survey._user.name'></td>
+      <td><a href="#/surveys/{{survey._id}}"><span ng-bind="survey.question"></span></a></td>
+      <td ng-bind='DC.parseDate(survey.createdAt)'></td>
+      <td><a ng-show='DC.currUser._id == survey._user._id' href="" ng-click=DC.delete(survey._id)>Delete</a></td>
+    </tr>
+  </table>
 </div>

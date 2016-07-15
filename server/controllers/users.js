@@ -24,6 +24,7 @@ module.exports = (function(){
           if (data.length > 0) {
             // result.errors.push("This name already exists")
             result.info = data[0]
+            res.json(result)
           }
           else {
             var user = new User(req.body)
@@ -33,14 +34,17 @@ module.exports = (function(){
                 result.status = false
                 for (var i = 0; i < err.errors.length; i++) {
                   result.errors.push(err.errors[i])
+
                 }
+                res.json(result)
               }
               else {
+                console.log('save info', info);
                 result.info = info
+                res.json(result)
               }
             })
           }
-          res.json(result)
         }
       })
     },

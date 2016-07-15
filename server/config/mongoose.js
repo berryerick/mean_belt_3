@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
 var fs  = require('fs');
 var fs  = require('fs');
 
-mongoose.connect('mongodb://localhost/DB_NAME')
+mongoose.connect('mongodb://localhost/surveysdb')
 // read all models files
 var models_path = __dirname + '/../models'
 fs.readdirSync(models_path).forEach(function(file){

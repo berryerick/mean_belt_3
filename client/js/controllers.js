@@ -1,5 +1,5 @@
 
-this_app.controller('loginController', function(userFactory){
+surveys.controller('loginController', function(userFactory){
   var that = this
   this.errors = []
 
@@ -16,38 +16,104 @@ this_app.controller('loginController', function(userFactory){
     })
   }
 
-
-
-
 })
 
-this_app.controller('dashboardController', function(userFactory){
+surveys.controller('dashboardController', function(userFactory, surveyFactory){
   var that = this
   this.errors = []
 
+
+  if (userFactory.currUser === null) {
+    userFactory.logout()
+  }
+  this.currUser = userFactory.currUser
+
+
+  this.getSurveys = function(){
+    surveyFactory.index(function(data){
+      that.surveys = data
+    })
+  }
+  this.getSurveys()
+  this.parseDate = function(date){
+    date = new Date(date)
+    return date.toDateString()
+  }
+
+  this.delete = function(id){
+    surveyFactory.delete(id)
+    for (var i = 0; i < this.surveys.length; i++) {
+      if (this.surveys[i]._id === id){
+        this.surveys.splice(i, 1)
+      }
+    }
+  }
+
+  this.logout = function(){
+    userFactory.logout()
+  }
+
+
+})
+surveys.controller('createController', function(userFactory, surveyFactory){
+  var that = this
+  this.errors = []
   this.currUser = userFactory.currUser
   if (this.currUser === null) {
     userFactory.logout()
   }
 
-  this.getUsers = function(){
-    userFactory.index(function(data){
-      that.users = data
-    })
+  this.survey = {
+    question:"",
+    options:[{votes: 0},{votes: 0},{votes: 0},{votes: 0}],
+    _user: this.currUser._id
   }
-  this.getUsers()
 
-
-  this.login = function(){
-    console.log('LC.login with', this.user);
-    userFactory.create(this.user, function(errors){
-      console.log(err);
+  this.create = function(){
+    this.errors = []
+    // this.survey._user = this.currUser._id
+    console.log('LC.login with', this.survey);
+    surveyFactory.create(this.survey, function(errors){
+      console.log(errors);
       for (var error in errors) {
         console.log(errors[error]);
-        that.errors.push(errors.error.message)
+        that.errors.push(errors[error])
       }
     })
   }
+
+
+  this.logout = function(){
+    userFactory.logout()
+  }
+
+
+})
+
+surveys.controller('surveyController', function(userFactory, surveyFactory, $routeParams){
+  var that = this
+  this.errors = []
+
+  if (userFactory.currUser === null) {
+    userFactory.logout()
+  }
+  this.currUser = userFactory.currUser
+
+  surveyFactory.show( function(data){
+    that.survey = data
+  })
+
+  this.vote = function(option){
+    console.log('voted for:', option);
+    surveyFactory.update(option, function(data){
+      console.log('vote success');
+      that.survey = data
+    })
+  }
+
+
+
+
   this.logout = function(){
     userFactory.logout()
   }

@@ -1,0 +1,33 @@
+<div class="" ng-controller="createController as CC">
+  <!-- {{CC}} -->
+  <a href="#/dashboard">Cancel</a>
+  <form>
+    <div class="field">
+      <label for="question">question: </label>
+      <input type="text" name="question" ng-model="CC.survey.question">
+    </div>
+    <div class="field">
+      <label for="option1">option1: </label>
+      <input type="text" name="option1" ng-model="CC.survey.options[0].content">
+    </div>
+    <div class="field">
+      <label for="option2">option2: </label>
+      <input type="text" name="option2" ng-model="CC.survey.options[1].content">
+    </div>
+    <div class="field">
+      <label for="option3">option3: </label>
+      <input type="text" name="option3" ng-model="CC.survey.options[2].content">
+    </div>
+    <div class="field">
+      <label for="option4">option4: </label>
+      <input type="text" name="option4" ng-model="CC.survey.options[3].content">
+    </div>
+
+    <button ng-click="CC.create()">Create Survey</button>
+
+    <ul>
+      <li ng-repeat="error in CC.errors track by $index" ng-show="CC.errors.length > 0"><span ng-bind="error"></span></li>
+    </ul>
+  </form>
+
+</div>

@@ -1,0 +1,23 @@
+<div class="" ng-controller="surveyController as SC">
+  <!-- {{SC}} -->
+  <a href="#/dashboard">Back to Surveys</a>
+
+  <h1 ng-bind="SC.survey.question"></h1>
+  <h3>click a vote button to cast your vote</h3>
+  <table>
+    <thead>
+      <th>Option</th>
+      <th>Current Count of Votes</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="option in SC.survey.options">
+        <td ng-bind="option.content"></td>
+        <td ng-bind="option.votes"></td>
+        <td><input type="button" ng-click="SC.vote(option.content)" value="Vote"></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div>
